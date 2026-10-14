@@ -1,4 +1,3 @@
-
 import base64
 import os
 
@@ -48,25 +47,29 @@ html, body, [class*="css"], .stApp, button, input, textarea {
 .brand-wrap { position: relative; top: -3.4rem; margin-bottom: -3.4rem; }
 
 /* เมนูหลัก (แถวแบบในแบบร่าง) */
+.st-key-menu, .st-key-menu2, .st-key-menu [data-testid="stElementContainer"], .st-key-menu2 [data-testid="stElementContainer"],
+.st-key-menu .stButton, .st-key-menu2 .stButton { width: 100% !important; }
+.st-key-menu .stButton, .st-key-menu2 .stButton { display: flex; justify-content: center; }
 .st-key-menu button, .st-key-menu2 button {
-    width: 100%; height: auto; position: relative; justify-content: flex-start;
+    width: 100% !important; height: auto; position: relative; justify-content: center;
     background: __CARD__; border: 1px solid __LINE__; border-radius: 14px;
-    padding: .9rem 2.6rem .9rem 1.2rem; color: #fff; margin-bottom: .1rem;
+    padding: .9rem 1.2rem; color: #fff; margin-bottom: .1rem;
 }
 .st-key-menu button, .st-key-menu2 button { transition: transform .12s ease, border-color .12s ease, background .12s ease; }
 .st-key-menu button:hover, .st-key-menu2 button:hover { border-color: __LIME__; color: #fff; transform: translateY(-1px); background: #1A3B2A; }
 .st-key-menu button:active, .st-key-menu2 button:active { transform: scale(.985); }
-.st-key-menu button > div, .st-key-menu2 button > div { gap: .9rem; align-items: center; justify-content: flex-start; }
+.st-key-menu button > div, .st-key-menu2 button > div { gap: .9rem; align-items: center; justify-content: center; width: auto; }
 .st-key-menu [data-testid="stIconMaterial"] { color: __LIME__; font-size: 1.7rem; background: rgba(143,175,74,.14);
     border-radius: 12px; padding: .55rem; width: 2.9rem; height: 2.9rem; display: flex; align-items: center; justify-content: center; }
 .st-key-menu2 [data-testid="stIconMaterial"] { color: __MUTED__; }
 @media (prefers-reduced-motion: reduce) { .st-key-menu button, .st-key-menu2 button { transition: none; } }
-.st-key-menu button p, .st-key-menu2 button p { text-align: left; margin: 0; font-size: 1.05rem; line-height: 1.45; }
-.st-key-menu button::after { content: "›"; position: absolute; right: 1.2rem; top: 50%; transform: translateY(-52%); font-size: 1.8rem; color: __LIME__; }
+.st-key-menu button p, .st-key-menu2 button p { text-align: center; margin: 0; font-size: 1.05rem; line-height: 1.45; }
 .st-key-menu2 button { background: transparent; border-style: dashed; color: __MUTED__; padding: .7rem 1.2rem; }
 [data-testid="stMarkdownColoredText"] { color: __LIME__ !important; font-size: .9rem; font-weight: 400; }
 
 /* ปุ่มกลับ */
+.stDownloadButton, .stDownloadButton button { width: 100% !important; }
+.stDownloadButton { display: flex; justify-content: center; }
 .st-key-back button { background: transparent; border: none; color: __LIME__; padding: 0; font-size: 1rem; }
 .st-key-back button:hover { color: #fff; background: transparent; }
 
