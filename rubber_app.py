@@ -10,6 +10,7 @@
 ภาพหน้าแรก: วางไฟล์ hero.jpg (หรือ hero.png) ไว้โฟลเดอร์เดียวกับไฟล์นี้
 ถ้าไม่มี แอปจะใช้ภาพวาดสวนยางแทน
 """
+import base64
 import os
 
 import pandas as pd
@@ -28,21 +29,34 @@ CSS = """
 html, body, [class*="css"], .stApp, button, input, textarea {
     font-family: 'Noto Sans Thai Looped', system-ui, sans-serif !important;
 }
-.stApp { background: __BG__; color: #fff; }
+.stApp {
+    background: radial-gradient(1100px 620px at 50% -8%, #214F35 0%, #0B1B12 62%) fixed;
+    color: #fff;
+}
 #MainMenu, footer, header[data-testid="stHeader"] { visibility: hidden; height: 0; }
 .block-container { max-width: 460px; padding: 1.2rem 1.2rem 4rem; }
+@media (min-width: 700px) {
+    .block-container {
+        margin: 2rem auto; padding: 1.4rem 1.4rem 3rem; background: __BG__;
+        border: 1px solid __LINE__; border-radius: 28px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
+    }
+}
 
 /* หัวเรื่อง */
-.brand { font-size: 3.4rem; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; margin: 1.2rem 0 .2rem; }
+.brand { font-size: 3.4rem; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 .2rem; text-shadow: 0 2px 18px rgba(0,0,0,.5); }
 .brand span { color: __LIME__; }
 .bar { width: 64px; height: 4px; background: __LIME__; border-radius: 2px; margin: .4rem 0 1rem; }
 .lead { color: #E9EFEA; font-size: 1.05rem; line-height: 1.65; margin-bottom: .6rem; }
 .lead b { color: __LIME__; font-weight: 600; }
 .meta { color: __MUTED__; font-size: .88rem; margin-bottom: 1.4rem; }
-.page-title { font-size: 1.9rem; font-weight: 700; margin: .4rem 0 1rem; }
+.page-title { font-size: 2rem; font-weight: 700; margin: .4rem 0 0; }
 .page-title span { color: __LIME__; }
-.hero { border-radius: 18px; overflow: hidden; line-height: 0; }
+.hero { position: relative; border-radius: 20px; overflow: hidden; line-height: 0; }
 .hero svg, .hero img { width: 100%; height: auto; display: block; }
+.hero::after { content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(14,36,25,0) 35%, __BG__ 100%); }
+.brand-wrap { position: relative; top: -3.4rem; margin-bottom: -3.4rem; }
 
 /* เมนูหลัก (แถวแบบในแบบร่าง) */
 .st-key-menu button, .st-key-menu2 button {
@@ -50,7 +64,14 @@ html, body, [class*="css"], .stApp, button, input, textarea {
     background: __CARD__; border: 1px solid __LINE__; border-radius: 14px;
     padding: .9rem 2.6rem .9rem 1.2rem; color: #fff; margin-bottom: .1rem;
 }
-.st-key-menu button:hover, .st-key-menu2 button:hover { border-color: __LIME__; color: #fff; }
+.st-key-menu button, .st-key-menu2 button { transition: transform .12s ease, border-color .12s ease, background .12s ease; }
+.st-key-menu button:hover, .st-key-menu2 button:hover { border-color: __LIME__; color: #fff; transform: translateY(-1px); background: #1A3B2A; }
+.st-key-menu button:active, .st-key-menu2 button:active { transform: scale(.985); }
+.st-key-menu button > div, .st-key-menu2 button > div { gap: .9rem; align-items: center; justify-content: flex-start; }
+.st-key-menu [data-testid="stIconMaterial"] { color: __LIME__; font-size: 1.7rem; background: rgba(143,175,74,.14);
+    border-radius: 12px; padding: .55rem; width: 2.9rem; height: 2.9rem; display: flex; align-items: center; justify-content: center; }
+.st-key-menu2 [data-testid="stIconMaterial"] { color: __MUTED__; }
+@media (prefers-reduced-motion: reduce) { .st-key-menu button, .st-key-menu2 button { transition: none; } }
 .st-key-menu button p, .st-key-menu2 button p { text-align: left; margin: 0; font-size: 1.05rem; line-height: 1.45; }
 .st-key-menu button::after { content: "›"; position: absolute; right: 1.2rem; top: 50%; transform: translateY(-52%); font-size: 1.8rem; color: __LIME__; }
 .st-key-menu2 button { background: transparent; border-style: dashed; color: __MUTED__; padding: .7rem 1.2rem; }
@@ -65,7 +86,7 @@ html, body, [class*="css"], .stApp, button, input, textarea {
 .big-num { font-size: 3.1rem; font-weight: 600; color: __LIME__; line-height: 1.1; }
 .big-num small { font-size: 1rem; color: __MUTED__; margin-left: .4rem; font-weight: 400; }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin: 1.2rem 0; }
-.tile { background: __CARD__; border: 1px solid __LINE__; border-radius: 14px; padding: .8rem 1rem; }
+.tile { background: linear-gradient(160deg, #1B3D2B, #12291D); border: 1px solid __LINE__; border-radius: 16px; padding: .9rem 1rem; }
 .tile .v { font-size: 1.3rem; font-weight: 600; }
 .tile .l { font-size: .82rem; color: __MUTED__; }
 .kv { display: flex; justify-content: space-between; align-items: baseline; padding: .75rem 0; border-bottom: 1px solid __LINE__; }
@@ -73,7 +94,14 @@ html, body, [class*="css"], .stApp, button, input, textarea {
 .kv .p { color: __MUTED__; font-size: .85rem; margin-left: .5rem; }
 .kv .v { font-weight: 600; }
 .note { color: __MUTED__; font-size: .88rem; margin: 1rem 0; line-height: 1.6; }
-h3 { font-size: 1.05rem !important; font-weight: 600 !important; margin-top: 1.6rem !important; }
+h3 { font-size: 1.05rem !important; font-weight: 600 !important; margin-top: 1.8rem !important;
+     border-left: 3px solid __LIME__; padding: 0 0 0 .6rem !important; }
+label p, [data-testid="stWidgetLabel"] p { color: #CFE0D3 !important; font-size: .92rem !important; }
+[data-baseweb="input"], [data-baseweb="base-input"] { background: __CARD__ !important; border-radius: 12px !important; }
+[data-baseweb="input"] { border: 1px solid __LINE__ !important; }
+[data-testid="stNumberInput"] button { background: transparent !important; color: __LIME__ !important; }
+[data-testid="stDataFrame"] { border: 1px solid __LINE__; border-radius: 14px; overflow: hidden; }
+[data-testid="stCaptionContainer"] { color: __MUTED__; }
 
 :focus-visible { outline: 2px solid __LIME__ !important; outline-offset: 2px; }
 </style>
@@ -169,8 +197,8 @@ def kv_rows(rows):
 
 def header(white, lime):
     with st.container(key="back"):
-        st.button("‹ กลับ", on_click=go, args=("home",))
-    st.markdown(f'<div class="page-title">{white}<span>{lime}</span></div>', unsafe_allow_html=True)
+        st.button("กลับ", icon=":material/arrow_back_ios_new:", on_click=go, args=("home",))
+    st.markdown(f'<div class="page-title">{white}<span>{lime}</span></div><div class="bar"></div>', unsafe_allow_html=True)
 
 
 # ---------------- คำนวณ ----------------
@@ -219,11 +247,16 @@ tot_rev, tot_cost, tot_net = df["รายได้"].sum(), df["ต้นทุ
 def page_home():
     hero = next((p for p in ("hero.jpg", "hero.jpeg", "hero.png") if os.path.exists(p)), None)
     if hero:
-        st.image(hero, use_container_width=True)
+        mime = "image/png" if hero.endswith(".png") else "image/jpeg"
+        with open(hero, "rb") as f:
+            b64 = base64.b64encode(f.read()).decode()
+        art = f'<img src="data:{mime};base64,{b64}" alt="สวนยางพารา">'
     else:
-        st.markdown(f'<div class="hero">{HERO_SVG}</div>', unsafe_allow_html=True)
+        art = HERO_SVG
+    st.markdown(f'<div class="hero">{art}</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="brand">ปลูก<span>คุ้ม</span></div><div class="bar"></div>', unsafe_allow_html=True)
+    st.markdown('<div class="brand-wrap"><div class="brand">ปลูก<span>คุ้ม</span></div><div class="bar"></div></div>',
+                unsafe_allow_html=True)
     st.markdown(
         '<div class="lead">แอปคำนวณปริมาณน้ำและปุ๋ย ค่าใช้จ่าย <b>ความคุ้มค่า</b> '
         'และ<b>คาดการณ์ผลผลิต</b>ในสวนยางพารา</div>'
@@ -232,16 +265,18 @@ def page_home():
     )
 
     menu = [
-        ("น้ำและปุ๋ย", "คำนวณปริมาณ", "water"),
-        ("ค่าใช้จ่าย", "ประเมินต้นทุน", "cost"),
-        ("ความคุ้มค่า", "วิเคราะห์ความคุ้มค่า", "value"),
-        ("ผลผลิต", "คาดการณ์ผลผลิต", "yield"),
+        ("น้ำและปุ๋ย", "คำนวณปริมาณ", "water", ":material/water_drop:"),
+        ("ค่าใช้จ่าย", "ประเมินต้นทุน", "cost", ":material/payments:"),
+        ("ความคุ้มค่า", "วิเคราะห์ความคุ้มค่า", "value", ":material/savings:"),
+        ("ผลผลิต", "คาดการณ์ผลผลิต", "yield", ":material/forest:"),
     ]
     with st.container(key="menu"):
-        for title, sub, page in menu:
-            st.button(f"**{title}**  \n:green[{sub}]", key=f"m_{page}", on_click=go, args=(page,))
+        for title, sub, page, icon in menu:
+            st.button(f"**{title}**  \n:green[{sub}]", key=f"m_{page}", icon=icon, on_click=go, args=(page,))
     with st.container(key="menu2"):
-        st.button("ข้อมูลสวน", key="m_garden", on_click=go, args=("garden",))
+        st.button("ข้อมูลสวน", key="m_garden", icon=":material/tune:", on_click=go, args=("garden",))
+    st.markdown('<div class="note">ตัวเลขทั้งหมดเป็นค่าตัวอย่าง ปรับให้ตรงกับสวนของคุณก่อนใช้ตัดสินใจ</div>',
+                unsafe_allow_html=True)
 
 
 # ---------------- ข้อมูลสวน ----------------
