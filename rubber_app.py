@@ -22,49 +22,51 @@ html, body, [class*="css"], .stApp, button, input, textarea {
     color: #fff;
 }
 #MainMenu, footer, header[data-testid="stHeader"] { visibility: hidden; height: 0; }
-.block-container { max-width: 460px; padding: 1.2rem 1.2rem 4rem; }
+.block-container { max-width: 460px; padding: 1rem 1.2rem 2.5rem; }
+.block-container [data-testid="stVerticalBlock"] { gap: .75rem; }
 @media (min-width: 700px) {
     .block-container {
-        margin: 2rem auto; padding: 1.4rem 1.4rem 3rem; background: __BG__;
+        margin: 1.2rem auto; padding: 1.2rem 1.4rem 1.6rem; background: __BG__;
         border: 1px solid __LINE__; border-radius: 28px;
         box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
     }
 }
 
 /* หัวเรื่อง */
-.brand { font-size: 3.4rem; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 .2rem; text-shadow: 0 2px 18px rgba(0,0,0,.5); }
+.brand { font-size: clamp(2.6rem, 7.5vh, 3.4rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; margin: 0 0 .2rem; text-shadow: 0 2px 18px rgba(0,0,0,.5); }
 .brand span { color: __LIME__; }
 .bar { width: 64px; height: 4px; background: __LIME__; border-radius: 2px; margin: .4rem 0 1rem; }
-.lead { color: #E9EFEA; font-size: 1.05rem; line-height: 1.65; margin-bottom: .6rem; }
+.lead { color: #E9EFEA; font-size: .98rem; line-height: 1.55; margin-bottom: .2rem; }
 .lead b { color: __LIME__; font-weight: 600; }
-.meta { color: __MUTED__; font-size: .88rem; margin-bottom: 1.4rem; }
+.meta { color: __MUTED__; font-size: .85rem; margin-bottom: .4rem; }
 .page-title { font-size: 2rem; font-weight: 700; margin: .4rem 0 0; }
 .page-title span { color: __LIME__; }
-.hero { position: relative; border-radius: 20px; overflow: hidden; line-height: 0; }
-.hero svg, .hero img { width: 100%; height: auto; display: block; }
+.hero { position: relative; border-radius: 20px; overflow: hidden; line-height: 0; height: clamp(120px, 20vh, 210px); }
+.hero svg, .hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .hero::after { content: ""; position: absolute; inset: 0;
     background: linear-gradient(180deg, rgba(14,36,25,0) 35%, __BG__ 100%); }
-.brand-wrap { position: relative; top: -3.4rem; margin-bottom: -3.4rem; }
+.brand-wrap { position: relative; top: -2.9rem; margin-bottom: -2.9rem; }
 
 /* เมนูหลัก (แถวแบบในแบบร่าง) */
 .st-key-menu, .st-key-menu2, .st-key-menu [data-testid="stElementContainer"], .st-key-menu2 [data-testid="stElementContainer"],
 .st-key-menu .stButton, .st-key-menu2 .stButton { width: 100% !important; }
 .st-key-menu .stButton, .st-key-menu2 .stButton { display: flex; justify-content: center; }
+.st-key-menu [data-testid="stVerticalBlock"], .st-key-menu2 [data-testid="stVerticalBlock"] { gap: .55rem; }
 .st-key-menu button, .st-key-menu2 button {
     width: 100% !important; height: auto; position: relative; justify-content: center;
     background: __CARD__; border: 1px solid __LINE__; border-radius: 14px;
-    padding: .9rem 1.2rem; color: #fff; margin-bottom: .1rem;
+    padding: clamp(.5rem, 1.6vh, .9rem) 1.2rem; color: #fff; margin-bottom: 0;
 }
 .st-key-menu button, .st-key-menu2 button { transition: transform .12s ease, border-color .12s ease, background .12s ease; }
 .st-key-menu button:hover, .st-key-menu2 button:hover { border-color: __LIME__; color: #fff; transform: translateY(-1px); background: #1A3B2A; }
 .st-key-menu button:active, .st-key-menu2 button:active { transform: scale(.985); }
 .st-key-menu button > div, .st-key-menu2 button > div { gap: .9rem; align-items: center; justify-content: center; width: auto; }
-.st-key-menu [data-testid="stIconMaterial"] { color: __LIME__; font-size: 1.7rem; background: rgba(143,175,74,.14);
-    border-radius: 12px; padding: .55rem; width: 2.9rem; height: 2.9rem; display: flex; align-items: center; justify-content: center; }
+.st-key-menu [data-testid="stIconMaterial"] { color: __LIME__; font-size: 1.5rem; margin-right: .8rem; flex: none; background: rgba(143,175,74,.14);
+    border-radius: 12px; padding: .5rem; width: 2.6rem; height: 2.6rem; display: flex; align-items: center; justify-content: center; }
 .st-key-menu2 [data-testid="stIconMaterial"] { color: __MUTED__; }
 @media (prefers-reduced-motion: reduce) { .st-key-menu button, .st-key-menu2 button { transition: none; } }
 .st-key-menu button p, .st-key-menu2 button p { text-align: center; margin: 0; font-size: 1.05rem; line-height: 1.45; }
-.st-key-menu2 button { background: transparent; border-style: dashed; color: __MUTED__; padding: .7rem 1.2rem; }
+.st-key-menu2 button { background: transparent; border-style: dashed; color: __MUTED__; padding: .5rem 1.2rem; }
 [data-testid="stMarkdownColoredText"] { color: __LIME__ !important; font-size: .9rem; font-weight: 400; }
 
 /* ปุ่มกลับ */
@@ -85,7 +87,7 @@ html, body, [class*="css"], .stApp, button, input, textarea {
 .kv .k { color: #E9EFEA; }
 .kv .p { color: __MUTED__; font-size: .85rem; margin-left: .5rem; }
 .kv .v { font-weight: 600; }
-.note { color: __MUTED__; font-size: .88rem; margin: 1rem 0; line-height: 1.6; }
+.note { color: __MUTED__; font-size: .82rem; margin: .5rem 0 0; line-height: 1.55; }
 h3 { font-size: 1.05rem !important; font-weight: 600 !important; margin-top: 1.8rem !important;
      border-left: 3px solid __LIME__; padding: 0 0 0 .6rem !important; }
 label p, [data-testid="stWidgetLabel"] p { color: #CFE0D3 !important; font-size: .92rem !important; }
@@ -103,7 +105,7 @@ for k, v in {"__BG__": BG, "__LIME__": LIME, "__CARD__": CARD, "__LINE__": LINE,
 st.markdown(CSS, unsafe_allow_html=True)
 
 HERO_SVG = f"""
-<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="สวนยางพารา">
+<svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="สวนยางพารา">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#2C5B3A"/><stop offset="1" stop-color="#0E2419"/>
